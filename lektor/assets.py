@@ -2,7 +2,10 @@ import os
 import stat
 import posixpath
 
+from werkzeug.utils import cached_property
+
 from lektor.sourceobj import SourceObject
+from lektor.filecontents import FileContents
 
 
 def get_asset(pad, filename, parent=None):
@@ -68,6 +71,10 @@ class Asset(SourceObject):
 
     def build_asset(self, f):
         pass
+
+    @cached_property
+    def contents(self):
+        return FileContents(self.source_filename)
 
     @property
     def children(self):
